@@ -9,7 +9,7 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: "http://localhost:8080",
+        target: "https://roomie-final-production.up.railway.app",
         changeOrigin: true,
       },
     },
