@@ -1,0 +1,10 @@
+node_modules/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Tooling and OS metadata
+.DS_Store
+*.log
