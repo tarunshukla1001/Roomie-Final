@@ -1,5 +1,5 @@
 package com.telusko.pgbooking.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.telusko.pgbooking.dto.AuthResponse;
 import com.telusko.pgbooking.dto.LoginRequest;
 import com.telusko.pgbooking.dto.RegisterRequest;
@@ -34,6 +34,7 @@ public class AuthService {
         this.otpService = otpService;
     }
 
+    @Transactional
     public AuthResponse register(RegisterRequest request) {
 
         String email = request.getEmail()

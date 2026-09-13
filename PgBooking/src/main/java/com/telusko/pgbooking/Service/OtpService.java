@@ -1,5 +1,5 @@
 package com.telusko.pgbooking.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.telusko.pgbooking.Model.OtpVerification;
 import com.telusko.pgbooking.Repo.OtpVerificationRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -236,11 +236,8 @@ public class OtpService {
                 .map(OtpVerification::isVerified)
                 .orElse(false);
     }
-
+    @Transactional
     public void deleteVerification(String email) {
-
-        otpRepository.deleteByEmail(
-                email.trim().toLowerCase()
-        );
+        otpRepository.deleteByEmail(email.toLowerCase().trim());
     }
 }
