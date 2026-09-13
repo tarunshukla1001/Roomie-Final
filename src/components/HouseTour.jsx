@@ -1,5 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence, useInView } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  AnimatePresence,
+  useInView,
+} from "framer-motion";
 import { Play, Volume2, VolumeX, ArrowDown, Gauge } from "lucide-react";
 
 export default function HouseTour() {
@@ -76,29 +83,25 @@ export default function HouseTour() {
   const videoWidth = useTransform(
     smoothProgress,
     [0, 0.7],
-    [isMobile ? "92%" : "40%", isMobile ? "96%" : "96%"]
+    [isMobile ? "92%" : "40%", isMobile ? "96%" : "96%"],
   );
 
   // 2. Video Height: from compact pill/card (~46vh) to full banner (~84vh)
   const videoHeight = useTransform(
     smoothProgress,
     [0, 0.7],
-    [isMobile ? "38vh" : "48vh", isMobile ? "74vh" : "84vh"]
+    [isMobile ? "38vh" : "48vh", isMobile ? "74vh" : "84vh"],
   );
 
   // 3. Horizontal position: starts left-aligned, centers as it expands
   const videoTranslateX = useTransform(
     smoothProgress,
     [0, 0.65],
-    [isMobile ? "0%" : "-26%", "0%"]
+    [isMobile ? "0%" : "-26%", "0%"],
   );
 
   // 4. Border Radius: transitions smoothly from organic pill (32px) to refined corner (14px)
-  const borderRadius = useTransform(
-    smoothProgress,
-    [0, 0.7],
-    ["32px", "14px"]
-  );
+  const borderRadius = useTransform(smoothProgress, [0, 0.7], ["32px", "14px"]);
 
   // 5. Approach Text (Right side): fades out and slides away as video expands
   const sideTextOpacity = useTransform(smoothProgress, [0, 0.35], [1, 0]);
@@ -110,10 +113,18 @@ export default function HouseTour() {
 
   // 7. Dynamic Blue Line animation surrounding the video
   const linePathLength = useTransform(smoothProgress, [0, 0.6], [0.15, 1]);
-  const lineOpacity = useTransform(smoothProgress, [0, 0.55, 0.75], [1, 1, 0.15]);
+  const lineOpacity = useTransform(
+    smoothProgress,
+    [0, 0.55, 0.75],
+    [1, 1, 0.15],
+  );
 
   // 8. Grid '+' crosshairs: fade in along top and bottom borders as banner expands (Lusion signature)
-  const crosshairsOpacity = useTransform(smoothProgress, [0.45, 0.72], [0, 0.65]);
+  const crosshairsOpacity = useTransform(
+    smoothProgress,
+    [0.45, 0.72],
+    [0, 0.65],
+  );
 
   // 9. Central Typography overlay scale
   const textScale = useTransform(smoothProgress, [0, 0.75], [0.92, 1.06]);
@@ -169,7 +180,8 @@ export default function HouseTour() {
   // Cycle video speed: 1.5x -> 1.75x -> 2.0x (Audio stays at 1.0x!)
   const cycleSpeed = (e) => {
     e.stopPropagation();
-    const nextSpeed = videoSpeed === 1.75 ? 2.0 : videoSpeed === 2.0 ? 1.5 : 1.75;
+    const nextSpeed =
+      videoSpeed === 1.75 ? 2.0 : videoSpeed === 2.0 ? 1.5 : 1.75;
     setVideoSpeed(nextSpeed);
     if (videoRef.current) {
       videoRef.current.playbackRate = nextSpeed;
@@ -187,7 +199,6 @@ export default function HouseTour() {
     >
       {/* Pinned Viewport Stage */}
       <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-8">
-        
         {/* Subtle Background Architectural Ambient Wash */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-60">
           <div className="h-[45vw] w-[45vw] max-w-[700px] rounded-full bg-[#0044FF]/[0.04] blur-[140px]" />
@@ -202,9 +213,21 @@ export default function HouseTour() {
         >
           <defs>
             <filter id="blue-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="8" stdDeviation="16" floodColor="#0044FF" floodOpacity="0.45" />
+              <feDropShadow
+                dx="0"
+                dy="8"
+                stdDeviation="16"
+                floodColor="#0044FF"
+                floodOpacity="0.45"
+              />
             </filter>
-            <linearGradient id="blueLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient
+              id="blueLineGrad"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
               <stop offset="0%" stopColor="#0044FF" />
               <stop offset="60%" stopColor="#2563eb" />
               <stop offset="100%" stopColor="#0035cc" />
@@ -248,7 +271,6 @@ export default function HouseTour() {
           <div className="flex items-center justify-between w-full max-w-6xl px-2 mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#ff5a36]">
             <span className="flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full bg-[#0044FF] animate-ping" />
-              
             </span>
             <span className="hidden sm:flex items-center gap-1 text-[#1a1814]/50">
               Scroll to expand
@@ -264,7 +286,6 @@ export default function HouseTour() {
 
         {/* Main Interactive Stage */}
         <div className="relative z-10 flex w-full max-w-7xl items-center justify-center">
-
           {/* RIGHT-SIDE CONTENT (Initial Layout): "OUR APPROACH" - slides out as video grows */}
           {!isMobile && (
             <motion.div
@@ -276,7 +297,9 @@ export default function HouseTour() {
                 Our Approach
               </div>
               <p className="font-body text-lg xl:text-xl font-medium leading-relaxed text-[#3d3830]">
-                We combine architectural vision, spatial motion, and curated design to craft living spaces that visually captivate and seamlessly invite real living.
+                We combine architectural vision, spatial motion, and curated
+                design to craft living spaces that visually captivate and
+                seamlessly invite real living.
               </p>
             </motion.div>
           )}
@@ -328,8 +351,7 @@ export default function HouseTour() {
               }}
               className="h-full w-full object-cover select-none brightness-95 group-hover:brightness-100 transition-[filter] duration-500"
             >
-              <source src="public/house-tour-video.mp4" type="video/mp4" />
-              <source src="/videos/house-tour.webm" type="video/webm" />
+              <source src="/house-tour-video.mp4" type="video/mp4" />
             </video>
 
             {/* Dedicated Audio Element: Strictly plays at normal 1.0x speed */}
@@ -441,4 +463,3 @@ export default function HouseTour() {
     </section>
   );
 }
-
