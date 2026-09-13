@@ -2,8 +2,8 @@ import axios from "axios";
 import { fillImages } from "../data/listings";
 
 const BASE = import.meta.env.DEV
-  ? "" // Keeps your local Vite proxy working for testing on your machine
-  : "https://roomie-final-production.up.railway.app"; // Forces Netlify to use your live Railway backend
+  ? ""
+  : import.meta.env.VITE_API_URL;
 
 const client = axios.create({
   baseURL: BASE,
