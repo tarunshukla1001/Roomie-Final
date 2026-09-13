@@ -116,16 +116,29 @@ export default function Login() {
   }, []);
 
   async function onSubmit(event) {
-    event.preventDefault();
-    setError("");
+  event.preventDefault();
+  setError("");
 
-    try {
-      await login(form);
+  try {
+    const result = await login(form);
+
+    const role = result?.user?.role?.toUpperCase();
+
+    if (role === "OWNER") {
+      navigate("/owner");
+    } else if (role === "ADMIN") {
+      navigate("/admin");
+    } else {
       navigate("/stays");
-    } catch (err) {
-      setError(err?.response?.data?.error || err?.message || "Login failed. Please try again.");
     }
+  } catch (err) {
+    setError(
+      err?.response?.data?.error ||
+        err?.message ||
+        "Login failed. Please try again."
+    );
   }
+}
 
   return (
     <main
