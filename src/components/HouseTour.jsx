@@ -329,7 +329,7 @@ export default function HouseTour() {
               className="h-full w-full object-cover select-none brightness-95 group-hover:brightness-100 transition-[filter] duration-500"
             >
               <source src="/house-tour-video.mp4" type="video/mp4" />
-              <source src="/videos/house-tour.webm" type="video/webm" />
+              {/* <source src="/videos/house-tour.webm" type="video/webm" /> */}
             </video>
 
             {/* Dedicated Audio Element: Strictly plays at normal 1.0x speed */}
