@@ -1,0 +1,332 @@
+.add-property-page {
+  min-height: 100vh;
+  background: #f5efe0;
+  color: #111;
+}
+
+.add-property-main {
+  min-height: 100vh;
+  padding: 70px 7vw 100px;
+}
+
+.add-property-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 70px;
+}
+
+.add-property-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #6b6b6b;
+  margin-bottom: 22px;
+}
+
+.add-property-title {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(64px, 8vw, 125px);
+  line-height: 0.88;
+  letter-spacing: -0.07em;
+  font-weight: 800;
+}
+
+.add-property-title span {
+  color: #ff3399;
+}
+
+.add-property-subtitle {
+  margin-top: 30px;
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+.add-property-back {
+  border: 1px solid #d6d0c2;
+  background: transparent;
+  border-radius: 999px;
+  padding: 13px 20px;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.add-property-back:hover {
+  background: #111;
+  color: white;
+  transform: translateX(-4px);
+}
+
+.property-form-card {
+  max-width: 1100px;
+  background: #fff;
+  border-radius: 28px;
+  padding: clamp(28px, 5vw, 60px);
+  box-shadow: 0 25px 80px rgba(20, 15, 10, 0.08);
+}
+
+.property-form-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding-bottom: 38px;
+  border-bottom: 1px solid #e8e3d9;
+  margin-bottom: 40px;
+}
+
+.property-form-top h2 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+.property-form-top p {
+  margin: 10px 0 0;
+  color: #777;
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.property-step {
+  flex-shrink: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.property-step span {
+  color: #aaa;
+  margin: 0 5px;
+}
+
+.property-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px 24px;
+}
+
+.property-form-full {
+  grid-column: 1 / -1;
+}
+
+.property-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.property-form-field label {
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.property-form-field input,
+.property-form-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd8ce;
+  background: #faf9f6;
+  border-radius: 14px;
+  padding: 17px 18px;
+  outline: none;
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  color: #111;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.property-form-field textarea {
+  resize: vertical;
+  min-height: 145px;
+  line-height: 1.6;
+}
+
+.property-form-field input::placeholder,
+.property-form-field textarea::placeholder {
+  color: #aaa;
+}
+
+.property-form-field input:focus,
+.property-form-field textarea:focus {
+  border-color: #111;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.05);
+}
+
+.property-form-field input:disabled,
+.property-form-field textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rent-input {
+  position: relative;
+}
+
+.rent-input > span {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Manrope", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  z-index: 1;
+}
+
+.rent-input input {
+  padding-left: 40px;
+}
+
+.property-form-error {
+  margin-top: 28px;
+  padding: 15px 18px;
+  border-radius: 12px;
+  background: #fff0f3;
+  color: #c62845;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.property-form-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 45px;
+  padding-top: 30px;
+  border-top: 1px solid #e8e3d9;
+}
+
+.property-form-note span {
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.property-form-note p {
+  margin: 7px 0 0;
+  max-width: 420px;
+  color: #777;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.create-property-button {
+  flex-shrink: 0;
+  border: 0;
+  background: #111;
+  color: white;
+  border-radius: 999px;
+  padding: 17px 25px;
+  min-width: 190px;
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.create-property-button span {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.create-property-button:hover {
+  background: #ff3399;
+  transform: translateY(-3px);
+}
+
+.create-property-button:hover span {
+  transform: translate(3px, -3px);
+}
+
+.create-property-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button-dots {
+  letter-spacing: 3px;
+}
+
+@media (max-width: 900px) {
+  .add-property-main {
+    padding: 50px 30px 80px;
+  }
+
+  .add-property-header {
+    margin-bottom: 50px;
+  }
+
+  .property-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .property-form-full {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .add-property-main {
+    padding: 40px 20px 70px;
+  }
+
+  .add-property-header {
+    flex-direction: column;
+  }
+
+  .add-property-title {
+    font-size: clamp(55px, 16vw, 90px);
+  }
+
+  .add-property-back {
+    align-self: flex-start;
+  }
+
+  .property-form-card {
+    border-radius: 20px;
+    padding: 25px 20px;
+  }
+
+  .property-form-top {
+    flex-direction: column;
+  }
+
+  .property-form-bottom {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .create-property-button {
+    width: 100%;
+  }
+}

@@ -32,6 +32,14 @@ public class PropertyController {
         return propertyService.getAllProperties();
     }
 
+    @GetMapping("/my")
+    public List<Property> getMyProperties(Authentication authentication) {
+
+        String email = authentication.getName();
+
+        return propertyService.getMyProperties(email);
+    }
+
     @GetMapping("/{id}")
     public Property getProperty(@PathVariable Long id) {
         return propertyService.getPropertyById(id);
@@ -40,15 +48,26 @@ public class PropertyController {
     @PutMapping("/{id}")
     public Property updateProperty(
             @PathVariable Long id,
-            @RequestBody Property property) {
+            @RequestBody Property property,
+            Authentication authentication) {
 
-        return propertyService.updateProperty(id, property);
+        String email = authentication.getName();
+
+        return propertyService.updateProperty(
+                id,
+                property,
+                email
+        );
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProperty(@PathVariable Long id) {
+    public String deleteProperty(
+            @PathVariable Long id,
+            Authentication authentication) {
 
-        propertyService.deleteProperty(id);
+        String email = authentication.getName();
+
+        propertyService.deleteProperty(id, email);
 
         return "Property deleted successfully";
     }

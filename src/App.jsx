@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-
 import { AuthProvider } from "./context/AuthContext";
 import { trackVisit } from "./services/api";
 import Loader from "./components/Loader";
 import Layout from "./components/Layout";
+import OwnerDashboard from "./pages/OwnerDashboard";
+import AddProperty from "./pages/AddProperty";
 import AdminRoute from "./components/admin/AdminRoute";
 import AdminDashboard from "./pages/AdminDashboard";
 import Home from "./pages/Home";
@@ -98,8 +99,9 @@ export default function App() {
 
             <Route path="/register" element={<Register />} />
 
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/analytics" element={<AdminDashboard />} />
+            <Route path="/owner" element={<OwnerDashboard />} />
+
+            <Route path="/owner/properties/add" element={<AddProperty />} />
 
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminDashboard />} />

@@ -174,3 +174,36 @@ export async function fetchAdminAnalytics() {
   const { data } = await client.get("/api/admin/analytics");
   return data;
 }
+export async function fetchMyProperties() {
+  const { data } = await client.get("/api/properties/my");
+  return Array.isArray(data) ? data : [];
+}
+
+export async function createProperty(payload) {
+  const { data } = await client.post("/api/properties", {
+    name: payload.name,
+    description: payload.description,
+    address: payload.address,
+    city: payload.city,
+    monthlyRent: Number(payload.monthlyRent),
+  });
+
+  return data;
+}
+
+export async function updateProperty(id, payload) {
+  const { data } = await client.put(`/api/properties/${id}`, {
+    name: payload.name,
+    description: payload.description,
+    address: payload.address,
+    city: payload.city,
+    monthlyRent: Number(payload.monthlyRent),
+  });
+
+  return data;
+}
+
+export async function deleteProperty(id) {
+  const { data } = await client.delete(`/api/properties/${id}`);
+  return data;
+}

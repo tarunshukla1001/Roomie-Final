@@ -62,12 +62,23 @@ public class PropertyService {
 
     public Property updateProperty(
             Long id,
-            Property updatedProperty) {
+            Property updatedProperty,
+            String email) {
 
         Property existingProperty =
                 propertyRepository.findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException("Property not found"));
+
+        if (existingProperty.getOwner() == null ||
+                !existingProperty.getOwner()
+                        .getEmail()
+                        .equalsIgnoreCase(email)) {
+
+            throw new RuntimeException(
+                    "You are not allowed to update this property"
+            );
+        }
 
         existingProperty.setName(updatedProperty.getName());
         existingProperty.setDescription(updatedProperty.getDescription());
@@ -80,12 +91,27 @@ public class PropertyService {
         return propertyRepository.save(existingProperty);
     }
 
-    public void deleteProperty(Long id) {
 
-        if (!propertyRepository.existsById(id)) {
-            throw new RuntimeException("Property not found");
+    public void deleteProperty(Long id, String email) {
+
+        Property property =
+                propertyRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException("Property not found"));
+
+        if (property.getOwner() == null ||
+                !property.getOwner()
+                        .getEmail()
+                        .equalsIgnoreCase(email)) {
+
+            throw new RuntimeException(
+                    "You are not allowed to delete this property"
+            );
         }
 
-        propertyRepository.deleteById(id);
+        propertyRepository.delete(property);
+    }
+    public List<Property> getMyProperties(String email) {
+        return propertyRepository.findByOwner_EmailIgnoreCase(email);
     }
 }
