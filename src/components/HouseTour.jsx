@@ -345,7 +345,7 @@ export default function HouseTour() {
               muted
               playsInline
               preload="auto"
-              poster="/videos/house-tour-poster.jpg"
+              // poster="/videos/house-tour-poster.jpg"
               onLoadedMetadata={(e) => {
                 e.currentTarget.playbackRate = videoSpeed;
               }}
