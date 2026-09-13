@@ -124,7 +124,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173",
                 "https://roomie01.netlify.app",
-                "https://roomie-5lpt77s4l-tarunshukla1001-6416s-projects.vercel.app"
+                "https://roomie-5lpt77s4l-tarunshukla1001-6416s-projects.vercel.app",
+                "https://roomie-3pibchzra-tarunshukla1001-6416s-projects.vercel.app"
         ));
 
         configuration.addAllowedHeader("*");
