@@ -344,16 +344,24 @@ export default function HouseTour() {
               loop
               muted
               playsInline
-              preload="auto"
-              // poster="/videos/house-tour-poster.jpg"
+              preload="metadata"
               onLoadedMetadata={(e) => {
                 e.currentTarget.playbackRate = videoSpeed;
               }}
               className="h-full w-full object-cover select-none brightness-95 group-hover:brightness-100 transition-[filter] duration-500"
             >
-              <source src="/house-tour-video.mp4" type="video/mp4" />
+              <source
+                src="https://res.cloudinary.com/hihhy2q7/video/upload/v1789315167/house-tour-video.mp4"
+                type="video/mp4"
+              />
             </video>
 
+            <audio
+              ref={audioRef}
+              src="/house-tour-audio.mp3"
+              loop
+              preload="auto"
+            />
             {/* Dedicated Audio Element: Strictly plays at normal 1.0x speed */}
             <audio
               ref={audioRef}
