@@ -2,31 +2,45 @@ package com.telusko.pgbooking.Service;
 
 import com.telusko.pgbooking.Model.OtpVerification;
 import com.telusko.pgbooking.Repo.OtpVerificationRepository;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class OtpService {
 
     private final OtpVerificationRepository otpRepository;
-    private final JavaMailSender mailSender;
     private final PasswordEncoder passwordEncoder;
 
     private final SecureRandom random = new SecureRandom();
 
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+    @Value("${BREVO_API_KEY}")
+    private String brevoApiKey;
+
+    @Value("${BREVO_SENDER_EMAIL}")
+    private String senderEmail;
+
     public OtpService(
             OtpVerificationRepository otpRepository,
-            JavaMailSender mailSender,
             PasswordEncoder passwordEncoder) {
 
         this.otpRepository = otpRepository;
-        this.mailSender = mailSender;
         this.passwordEncoder = passwordEncoder;
+
+        this.restTemplate = new RestTemplate();
+        this.objectMapper = new ObjectMapper();
     }
 
     public void sendOtp(String email) {
@@ -60,7 +74,7 @@ public class OtpService {
 
         verification.setEmail(email);
 
-        // Store hashed OTP, not plain OTP
+        // Store hashed OTP
         verification.setOtp(
                 passwordEncoder.encode(otp)
         );
@@ -73,24 +87,91 @@ public class OtpService {
         verification.setAttempts(0);
         verification.setVerified(false);
 
+        /*
+         * Send email FIRST.
+         * Only save the OTP if Brevo successfully accepts the email.
+         */
+        sendEmail(email, otp);
+
         otpRepository.save(verification);
+    }
 
-        SimpleMailMessage message =
-                new SimpleMailMessage();
+    private void sendEmail(String email, String otp) {
 
-        message.setTo(email);
-        message.setSubject("Roomie - Email Verification OTP");
+        String url = "https://api.brevo.com/v3/smtp/email";
 
-        message.setText(
-                "Your Roomie verification OTP is: "
-                        + otp
-                        + "\n\n"
-                        + "This OTP is valid for 5 minutes."
-                        + "\n\n"
-                        + "If you did not request this OTP, ignore this email."
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("api-key", brevoApiKey);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        Map<String, Object> sender = Map.of(
+                "name", "Roomie",
+                "email", senderEmail
         );
 
-        mailSender.send(message);
+        Map<String, Object> recipient = Map.of(
+                "email", email
+        );
+
+        Map<String, Object> body = Map.of(
+                "sender", sender,
+                "to", List.of(recipient),
+                "subject", "Roomie - Email Verification OTP",
+                "htmlContent",
+                """
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+                    <h2>Roomie Email Verification</h2>
+
+                    <p>Your Roomie verification OTP is:</p>
+
+                    <div style="
+                        font-size: 32px;
+                        font-weight: bold;
+                        letter-spacing: 8px;
+                        margin: 25px 0;
+                    ">
+                        %s
+                    </div>
+
+                    <p>This OTP is valid for <strong>5 minutes</strong>.</p>
+
+                    <p>If you did not request this OTP, you can safely ignore this email.</p>
+
+                    <br>
+
+                    <p>Regards,<br><strong>Roomie Team</strong></p>
+                </div>
+                """.formatted(otp)
+        );
+
+        HttpEntity<Map<String, Object>> request =
+                new HttpEntity<>(body, headers);
+
+        try {
+
+            ResponseEntity<String> response =
+                    restTemplate.postForEntity(
+                            url,
+                            request,
+                            String.class
+                    );
+
+            if (!response.getStatusCode().is2xxSuccessful()) {
+
+                throw new RuntimeException(
+                        "Brevo email service returned: "
+                                + response.getStatusCode()
+                );
+            }
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(
+                    "Could not send verification email. Please try again later."
+            );
+        }
     }
 
     public void verifyOtp(String email, String otp) {
@@ -106,6 +187,7 @@ public class OtpService {
                         );
 
         if (verification.isVerified()) {
+
             throw new RuntimeException(
                     "Email is already verified"
             );
@@ -150,7 +232,8 @@ public class OtpService {
 
         return otpRepository.findByEmail(
                         email.trim().toLowerCase()
-                ).map(OtpVerification::isVerified)
+                )
+                .map(OtpVerification::isVerified)
                 .orElse(false);
     }
 
