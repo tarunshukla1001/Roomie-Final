@@ -122,6 +122,21 @@ export default function OwnerDashboard() {
           ease: "power3.out",
         }
       );
+
+      gsap.fromTo(
+        ".owner-footer-section",
+        {
+          opacity: 0,
+          y: 20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.7,
+          ease: "power3.out",
+        }
+      );
     }, pageRef);
 
     return () => ctx.revert();
@@ -393,7 +408,7 @@ export default function OwnerDashboard() {
 
         </section>
 
-        <footer className="owner-footer">
+        <section className="owner-footer-section">
 
           <div>
             ROOMIE OWNER
@@ -401,15 +416,15 @@ export default function OwnerDashboard() {
 
           <div>
             DATABASE
-            <span>● ONLINE</span>
+            <span className="online">● ONLINE</span>
           </div>
 
           <div>
             API
-            <span>● ONLINE</span>
+            <span className="online">● ONLINE</span>
           </div>
 
-        </footer>
+        </section>
 
       </main>
     </div>

@@ -667,32 +667,39 @@
 
 /* ================= FOOTER ================= */
 
-.owner-footer {
+.owner-footer-section {
   border-top: 1px solid var(--owner-border);
 
   display: flex;
 
   justify-content: space-between;
 
-  margin-top: 50px;
-
   padding: 25px 5px 35px;
-
-  color: #666;
 
   font-size: 9px;
 
   letter-spacing: 0.15em;
 
-  font-weight: 600;
+  color: #777;
+
+  margin-top: 50px;
 }
 
-.owner-footer span {
-  color: #777;
+/* ---------------- FOOTER WRAPPER (main Footer component) ---------------- */
+
+.owner-footer-wrapper {
+  width: calc(100% - 240px);
+  margin-left: 240px;
+}
+
+.owner-footer-wrapper footer {
+  border-top: none !important;
+}
+.online {
+  color: #999;
 
   margin-left: 8px;
 }
-
 /* ================= LOADING ================= */
 
 .owner-loading {
@@ -916,7 +923,7 @@
     flex: 1;
   }
 
-  .owner-footer {
+  .owner-footer-section {
     flex-direction: column;
 
     gap: 15px;
